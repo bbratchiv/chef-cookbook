@@ -13,14 +13,25 @@ verifier:
   name: inspec
 
 platforms:
-  - name: ubuntu-16.04
-  - name: centos-7
+  - name: Ubuntu-box
+    driver:
+      box: ubuntu/trusty64
+    driver_config:
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080}]
+#  - name: centos-7
 
 suites:
   - name: default
     run_list:
-      - recipe[nginx_app_cookbook::default]
+      - recipe[nginx_app_cookbook::nginx]
+      - recipe[nginx_app_cookbook::swap]
+      - recipe[nginx_app_cookbook::add_users]
     verifier:
       inspec_tests:
-        - test/smoke/default
-    attributes:
+        - test/smoke/default/
+    attributes: { 
+                  user: ["john","mike"],
+                  swap_location: "/.SWAP",
+                  swap_size: 50
+                }
