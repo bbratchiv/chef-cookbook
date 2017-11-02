@@ -6,6 +6,12 @@
 
 include_recipe "apt"
 
+if node['platform'] == 'centos'
+  package 'epel-release' do
+    action :install
+  end
+end
+
 package 'nginx' do
   action :install
 end
