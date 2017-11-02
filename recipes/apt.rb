@@ -1,7 +1,9 @@
 #
 # Cookbook:: nginx_app_cookbook
-# Recipe:: default
+# Recipe:: apt
 #
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
-include_recipe 'nginx'
+execute "apt-get update" do
+  command "apt-get update"
+end
